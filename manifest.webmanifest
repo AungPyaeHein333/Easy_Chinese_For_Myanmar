@@ -1,0 +1,14 @@
+{
+  "name": "Easy Chinese for Myanmar",
+  "short_name": "Easy Chinese",
+  "description": "မြန်မာလို Mandarin Chinese သင်ယူရေး app",
+  "lang": "my",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f8f6",
+  "theme_color": "#123b36",
+  "icons": [
+    {"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

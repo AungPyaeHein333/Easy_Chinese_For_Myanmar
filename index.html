@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123b36">
+  <meta name="description" content="မြန်မာလို လေ့လာနိုင်သော Mandarin Chinese သင်ယူရေး app">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Easy Chinese for Myanmar</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">中</div>
+    <div class="brand-copy"><strong>Easy Chinese</strong><span>for Myanmar · HSK 1–3</span></div>
+    <span id="connection" class="status">စစ်ဆေးနေသည်…</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">နေ့စဉ် ၁၀ မိနစ်</p>
+      <h1>တရုတ်ဘာသာကို<br><em>လွယ်လွယ်ကူကူ</em> သင်ယူပါ။</h1>
+      <p class="hero-sub">汉字 · Pinyin · မြန်မာအဓိပ္ပာယ် · အသံထွက်</p>
+      <div class="hero-stats">
+        <div><strong id="learned-count">0</strong><span>သင်ပြီး</span></div>
+        <div><strong id="mastered-count">0</strong><span>မှတ်မိပြီ</span></div>
+        <div><strong id="quiz-score">—</strong><span>နောက်ဆုံး Quiz</span></div>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="အဓိက menu">
+      <button class="tab active" data-view="learn">သင်ယူရန်</button>
+      <button class="tab" data-view="flashcards">ကတ်များ</button>
+      <button class="tab" data-view="quiz">Quiz</button>
+      <button class="tab" data-view="practice">လေ့ကျင့်ရန်</button>
+    </nav>
+
+    <section id="learn-view" class="view">
+      <div class="section-heading"><div><p class="eyebrow">VOCABULARY</p><h2>စကားလုံးများ</h2></div><select id="level-filter" aria-label="HSK level"><option value="all">HSK 1–3 အားလုံး</option><option value="1">HSK 1</option><option value="2">HSK 2</option><option value="3">HSK 3</option></select></div>
+      <label class="search"><span>⌕</span><input id="search" placeholder="တရုတ်စာ၊ Pinyin သို့မဟုတ် မြန်မာလို ရှာရန်" autocomplete="off"></label>
+      <div id="word-list" class="word-list"></div>
+      <p class="small-note">MVP တွင် နမူနာစကားလုံး ၂၀ ပါဝင်သည်။ HSK စာရင်းအပြည့်အစုံ မဟုတ်သေးပါ။</p>
+    </section>
+
+    <section id="flashcards-view" class="view hidden">
+      <p class="eyebrow">FLASHCARDS</p><h2>မှတ်မိအောင် ပြန်လေ့ကျင့်ပါ</h2>
+      <p class="muted">ကတ်ကိုနှိပ်ပြီး အဓိပ္ပာယ်ကို ဖော်ပြပါ။</p>
+      <div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="Flashcard ကိုလှန်ရန်">
+        <span id="card-label" class="pill">HSK 1 · စကားလုံး</span>
+        <strong id="card-hanzi" class="card-hanzi">你好</strong>
+        <span id="card-pinyin" class="card-pinyin">nǐ hǎo</span>
+        <span id="card-answer" class="card-answer hidden">မင်္ဂလာပါ</span>
+        <span id="tap-hint" class="tap-hint">အဖြေကြည့်ရန် ကတ်ကိုနှိပ်ပါ</span>
+      </div>
+      <div class="button-row"><button id="prev-card" class="btn secondary">← အရင်</button><button id="flip-card" class="btn primary">အဖြေကြည့်ရန်</button><button id="next-card" class="btn secondary">နောက် →</button></div>
+      <div class="button-row"><button id="mark-known" class="btn primary">✓ မှတ်မိပြီ</button><button id="mark-review" class="btn secondary">↻ ပြန်လေ့ကျင့်ရန်</button></div>
+      <p id="card-position" class="muted center"></p>
+    </section>
+
+    <section id="quiz-view" class="view hidden">
+      <p class="eyebrow">QUICK QUIZ</p><h2>ကိုယ်တိုင်စစ်ဆေးကြည့်ပါ</h2>
+      <div class="quiz-panel">
+        <div class="quiz-meta"><span id="question-number">မေးခွန်း ၁ / ၅</span><span id="quiz-progress">0 မှန်</span></div>
+        <h3 id="quiz-question">“မင်္ဂလာပါ” ကို တရုတ်လို ဘယ်လိုပြောမလဲ?</h3>
+        <div id="quiz-options" class="quiz-options"></div>
+        <p id="quiz-feedback" class="feedback" aria-live="polite"></p>
+        <button id="next-question" class="btn primary full hidden">နောက်မေးခွန်း →</button>
+        <button id="restart-quiz" class="btn secondary full hidden">Quiz ပြန်စမယ်</button>
+      </div>
+      <p class="small-note">Quiz ရလဒ်ကို ဒီဖုန်းထဲမှာ သိမ်းထားမည်။</p>
+    </section>
+
+    <section id="practice-view" class="view hidden">
+      <p class="eyebrow">SPEAKING & DAILY CHINESE</p><h2>နားထောင်ပြီး လိုက်ပြောပါ</h2>
+      <div class="practice-card">
+        <span class="pill">နေ့စဉ်သုံး စကားပြော</span>
+        <h3>你好！你好吗？</h3><p class="pinyin">Nǐ hǎo! Nǐ hǎo ma?</p><p>မင်္ဂလာပါ။ နေကောင်းလား။</p>
+        <button id="speak-dialogue" class="btn primary">🔊 တရုတ်အသံနားထောင်ရန်</button>
+      </div>
+      <div class="practice-card">
+        <h3>ကိုယ်တိုင် အသံထွက်လေ့ကျင့်ရန်</h3>
+        <p class="muted">အောက်ပါစာကြောင်းကို အသံထွက်ဖတ်ပါ။ Browser က ပံ့ပိုးထားပါက အသံမှတ်တမ်း/အသိအမှတ်ပြုမှု စမ်းသုံးနိုင်သည်။</p>
+        <div class="target-phrase">谢谢你！<span>xièxie nǐ · ကျေးဇူးတင်ပါတယ်</span></div>
+        <button id="start-speaking" class="btn secondary">🎙️ စကားပြောစမ်းမယ်</button>
+        <p id="speech-result" class="feedback" aria-live="polite"></p>
+        <p class="small-note">Speech recognition သည် browser/device ပေါ်မူတည်ပြီး အလုပ်လုပ်နိုင်မှုကွာခြားသည်။ Offline အသံအသိအမှတ်ပြုမှုကို အာမမခံပါ။</p>
+      </div>
+      <div class="practice-card">
+        <span class="pill">GRAMMAR · အခြေခံ</span>
+        <h3>吗 (ma) — မေးခွန်းပြုလုပ်ခြင်း</h3>
+        <p>အတည်ပြုဝါကျအဆုံးမှာ <b>吗</b> ထည့်လိုက်ရင် ဟုတ်/မဟုတ် မေးခွန်းဖြစ်နိုင်သည်။</p>
+        <div class="example"><b>你好吗？</b><span>Nǐ hǎo ma?</span><span>နေကောင်းလား။</span></div>
+        <div class="example"><b>你是学生吗？</b><span>Nǐ shì xuésheng ma?</span><span>မင်းက ကျောင်းသားလား။</span></div>
+      </div>
+      <div class="practice-card">
+        <span class="pill">AI CONVERSATION</span>
+        <h3>AI နဲ့ တရုတ်လို စကားပြောခြင်း</h3>
+        <p>ဒီ MVP မှာ AI chat backend မချိတ်ဆက်ရသေးပါ။ လုံခြုံတဲ့ AI service တစ်ခုကို နောက်ပိုင်း server-side API နဲ့ ချိတ်ဆက်ရပါမယ်။ API key ကို browser ထဲ မထည့်ပါနှင့်။</p>
+        <button id="ai-info" class="btn secondary">AI Chat အကြောင်း</button><p id="ai-note" class="muted hidden">နောက်အဆင့်တွင် backend/API ချိတ်ဆက်ပြီး မြန်မာလို feedback ပေးနိုင်သော chat ကို ထည့်နိုင်သည်။</p>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Easy Chinese for Myanmar</span><span>အဆင့်လိုက် သင်ယူပါ · 每天进步一点</span></footer>
+  <script src="./app.js" defer></script>
+</body>
+</html>
